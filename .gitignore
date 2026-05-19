@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*.pw
+
+# Environment files
+.env
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Byte-compiled / optimized / DLL files
+*.so
+
+# FastAPI / Uvicorn temporary
+backend/tmp/
+
+# Database files
+backend/database/cache_db.json
+backend/database/rag_store.json
+backend/database/faiss_index/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+
+# Node
+node_modules/
+
+# Logs
+*.log

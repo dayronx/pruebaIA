@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prosperum - Financial Success</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">PROSPERUM FINTECH</div>
+        <nav class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Services</a>
+            <a href="#">About</a>
+            <a href="#">Insights</a>
+            <a href="#">Contact</a>
+            <a href="#" class="btn-schedule">Schedule Consultation</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Achieve Financial <br> Success & Security</h1>
+            <p>Expert financial planning and investment solutions tailored for your future.</p>
+            <a href="#" class="btn-main">Learn More</a>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="card-icon">📈</div>
+                <h3>Wealth Building</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo.</p>
+                <a href="#" class="card-link">Discover More</a>
+            </div>
+            <div class="feature-card">
+                <div class="card-icon">👥</div>
+                <h3>Investment Growth</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo.</p>
+                <a href="#" class="card-link">Discover More</a>
+            </div>
+            <div class="feature-card">
+                <div class="card-icon">🛡️</div>
+                <h3>Financial Protection</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo.</p>
+                <a href="#" class="card-link">Discover More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="solutions">
+        <h2>Our Financial Solutions</h2>
+        <div class="solutions-grid">
+            <div class="solution-item">
+                <div class="sol-img">🏦</div>
+                <h3>Retirement Planning</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                <a href="#" class="btn-sub">Learn More</a>
+            </div>
+            <div class="solution-item">
+                <div class="sol-img">📊</div>
+                <h3>Investment Management</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                <a href="#" class="btn-sub">Learn More</a>
+            </div>
+            <div class="solution-item">
+                <div class="sol-img">💰</div>
+                <h3>Wealth Management</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                <a href="#" class="btn-sub">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="bottom-section">
+        <div class="how-we-work">
+            <h2>How We Work</h2>
+            <p>Lorem ipsum dolor sit amet, coen oe sapsgits alits esum et campor ccoiunmt aget aouis distimm.</p>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-icon">🤝</div>
+                    <h4>Initial Consultation</h4>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🎯</div>
+                    <h4>Strategic Planning</h4>
+                </div>
+                <div class="step">
+                    <div class="step-icon">✔️</div>
+                    <h4>Execution</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <h3>Schedule Your <br> Free Consultation</h3>
+            <form>
+                <input type="text" placeholder="Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="tel" placeholder="Phone" required>
+                <input type="text" placeholder="Subject" required>
+                <textarea placeholder="Message" rows="3" required></textarea>
+                <button type="submit">Submit Request</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- INTERFAZ DEL CHATBOT OPTIMIZADA (Reto 07) -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-toggle" id="chatbotToggle">💬</div>
+
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div>
+                    <h4>FinBot AI Assistant</h4>
+                    <small style="color: #94a3b8; font-size: 10px;">Bilingual Fintech Support</small>
+                </div>
+                <button class="chatbot-close" id="chatbotClose">×</button>
+            </div>
+            
+            <!-- Selectores de Modo de Entrada y Salida -->
+            <div class="chatbot-modes">
+                <div class="mode-select">
+                    <label>In:</label>
+                    <select id="inputMode">
+                        <option value="text">Texto 💬</option>
+                        <option value="voice">Voz 🎤</option>
+                        <option value="image">Imagen + Texto 🖼️</option>
+                    </select>
+                </div>
+                <div class="mode-select">
+                    <label>Out:</label>
+                    <select id="outputMode">
+                        <option value="text">Texto 📄</option>
+                        <option value="audio">Audio 🔊</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="chatbot-body">
+                <div class="chat-message system">
+                    ¡Hola! Soy FinBot, tu asesor financiero bilingüe. ¿En qué puedo ayudarte hoy?
+                </div>
+            </div>
+
+            <!-- Previsualizaciones dinámicas -->
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <div id="imagePreviewContainer" style="display: none;">
+                    <span id="removeImage">×</span>
+                    <img id="imagePreview" src="" alt="Preview">
+                </div>
+                <div id="voicePreviewContainer" style="display: none;">
+                    <span class="recording-dot"></span>
+                    <span id="voiceStatus">Listo para grabar</span>
+                </div>
+            </div>
+
+            <div class="chatbot-footer">
+                <!-- Botón de Audio dinámico -->
+                <button id="btnAudioAction" class="icon-btn" style="display: none;">🎙️</button>
+                
+                <!-- Input de archivo oculto para imágenes -->
+                <input type="file" id="imageInput" accept="image/jpeg, image/png, image/webp" style="display: none;">
+                <button id="btnBrowseImage" class="icon-btn" style="display: none;">📁</button>
+
+                <input type="text" placeholder="Escribe un mensaje..." id="chatbotInput">
+                <button id="chatbotSend">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html>
