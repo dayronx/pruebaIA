@@ -13,7 +13,10 @@ load_dotenv()
 
 class FinBotAgent:
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.client = OpenAI(
+            api_key=os.getenv("DEEPSEEK_API_KEY"),
+            base_url="https://api.deepseek.com/v1"
+        )
         self.sessions_memory = {}
 
     def _get_or_create_memory(self, session_id: str) -> list:
@@ -98,7 +101,7 @@ class FinBotAgent:
 
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4o",
+                model="deepseek-chat",
                 messages=messages_to_send,
                 tools=self._get_tools_definition(),
                 tool_choice="auto"
@@ -135,7 +138,7 @@ class FinBotAgent:
 
                 # Generar la respuesta final combinando el contexto original y el resultado de la herramienta
                 second_response = self.client.chat.completions.create(
-                    model="gpt-4o",
+                    model="deepseek-chat",
                     messages=[{"role": "system", "content": SYSTEM_PROMPT}] + history
                 )
                 

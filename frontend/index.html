@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -106,7 +106,6 @@
         </div>
     </section>
 
-    <!-- INTERFAZ DEL CHATBOT OPTIMIZADA (Reto 07) -->
     <div class="chatbot-container" id="chatbotContainer">
         <div class="chatbot-toggle" id="chatbotToggle">💬</div>
 
@@ -119,32 +118,12 @@
                 <button class="chatbot-close" id="chatbotClose">×</button>
             </div>
             
-            <!-- Selectores de Modo de Entrada y Salida -->
-            <div class="chatbot-modes">
-                <div class="mode-select">
-                    <label>In:</label>
-                    <select id="inputMode">
-                        <option value="text">Texto 💬</option>
-                        <option value="voice">Voz 🎤</option>
-                        <option value="image">Imagen + Texto 🖼️</option>
-                    </select>
-                </div>
-                <div class="mode-select">
-                    <label>Out:</label>
-                    <select id="outputMode">
-                        <option value="text">Texto 📄</option>
-                        <option value="audio">Audio 🔊</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="chatbot-body">
+            <div class="chatbot-body" id="chatbotBody">
                 <div class="chat-message system">
                     ¡Hola! Soy FinBot, tu asesor financiero bilingüe. ¿En qué puedo ayudarte hoy?
                 </div>
             </div>
 
-            <!-- Previsualizaciones dinámicas -->
             <div class="preview-area" id="previewArea" style="display: none;">
                 <div id="imagePreviewContainer" style="display: none;">
                     <span id="removeImage">×</span>
@@ -152,20 +131,35 @@
                 </div>
                 <div id="voicePreviewContainer" style="display: none;">
                     <span class="recording-dot"></span>
-                    <span id="voiceStatus">Listo para grabar</span>
+                    <span id="voiceStatus">Grabando audio...</span>
                 </div>
             </div>
 
             <div class="chatbot-footer">
-                <!-- Botón de Audio dinámico -->
-                <button id="btnAudioAction" class="icon-btn" style="display: none;">🎙️</button>
-                
-                <!-- Input de archivo oculto para imágenes -->
-                <input type="file" id="imageInput" accept="image/jpeg, image/png, image/webp" style="display: none;">
-                <button id="btnBrowseImage" class="icon-btn" style="display: none;">📁</button>
+                <div class="footer-top-row">
+                    <input type="text" placeholder="Pregúntale a FinBot..." id="chatbotInput">
+                </div>
 
-                <input type="text" placeholder="Escribe un mensaje..." id="chatbotInput">
-                <button id="chatbotSend">Enviar</button>
+                <div class="footer-bottom-row">
+                    <div class="footer-left-actions">
+                        <input type="file" id="imageInput" accept="image/jpeg, image/png, image/webp" style="position:absolute;left:-9999px;" tabindex="-1">
+                        <button type="button" id="btnBrowseImage" class="icon-btn" title="Adjuntar imagen">＋</button>
+                    </div>
+                    
+                    <div class="response-mode-selector">
+                        <span class="mode-text mode-text-chat active" id="modeTxtChat">💬 Chat</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="outputModeToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="mode-text mode-text-voice" id="modeTxtVoice">🎙️ Voz</span>
+                    </div>
+                    
+                    <div class="footer-right-actions">
+                        <button type="button" id="btnAudioAction" class="icon-btn btn-mic" title="Grabar audio">🎙️</button>
+                        <button type="button" id="chatbotSend" class="icon-btn main-send" title="Enviar">➔</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

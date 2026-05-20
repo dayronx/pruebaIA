@@ -8,9 +8,12 @@ load_dotenv()
 
 class VisionService:
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.client = OpenAI(
+            api_key=os.getenv("DEEPSEEK_API_KEY"),
+            base_url="https://api.deepseek.com/v1"
+        )
 
-    def analyze_financial_image(self, base64_image: str) -> str:
+    def analyze_financial_image(self, base64_image: str, text_query: str = None) -> str:
         """
         Analiza de forma aislada un extracto o comprobante financiero en Base64.
         """
@@ -18,18 +21,27 @@ class VisionService:
             if not base64_image.startswith("data:image"):
                 base64_image = f"data:image/jpeg;base64,{base64_image}"
 
+            message_content = []
+            if text_query:
+                message_content.append({
+                    "type": "text",
+                    "text": f"Usuario pregunta: {text_query}"
+                })
+
+            message_content.extend([
+                {"type": "text", "text": VISION_DETAILED_PROMPT},
+                {
+                    "type": "image_url",
+                    "image_url": {"url": base64_image}
+                }
+            ])
+
             response = self.client.chat.completions.create(
-                model="gpt-4o",
+                model="deepseek-chat",
                 messages=[
                     {
                         "role": "user",
-                        "content": [
-                            {"type": "text", "text": VISION_DETAILED_PROMPT},
-                            {
-                                "type": "image_url",
-                                "image_url": {"url": base64_image}
-                            }
-                        ]
+                        "content": message_content
                     }
                 ],
                 max_tokens=600

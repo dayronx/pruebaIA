@@ -11,10 +11,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
-# Importar todos nuestros servicios core
+# Importar todos nuestros servicios core (CORREGIDO: Importación de VisionService)
 from backend.services.cache_service import SemanticCacheService
 from backend.services.voice_service import VoiceService
 from backend.services.rag_service import RAGService
+from backend.services.vision_service import VisionService  # <- AGREGADO
 from backend.agents.finbot_agent import FinBotAgent
 
 app = FastAPI(title="FinBot Backend Core", version="2.0")
@@ -28,13 +29,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Inicializar servicios en memoria única
+# Inicializar servicios en memoria única (CORREGIDO: Instancia de vision_service)
 cache_service = SemanticCacheService()
 voice_service = VoiceService()
 rag_service = RAGService()
+vision_service = VisionService()  # <- AGREGADO para resolver el NameError
 bot_agent = FinBotAgent()
 
-# Directorio temporal para manejar audios entrantes y salientes
+# Directorio temporal para manejar audios e imágenes entrantes/salientes
 TMP_DIR = "backend/tmp"
 os.makedirs(TMP_DIR, exist_ok=True)
 
@@ -75,7 +77,7 @@ def _save_base64_to_temp(base64_data: str, prefix: str, suffix: str = ".bin") ->
 async def handle_chat_request(chat_request: ChatRequest):
     """
     Controlador único unificado de la API de FinBot.
-    Procesa texto, voz, caché y lógica conversacional del agente.
+    Procesa texto, voz, imágenes, caché y lógica conversacional del agente.
     """
     start_time = time.time()
     voice_triggered = False
@@ -87,6 +89,7 @@ async def handle_chat_request(chat_request: ChatRequest):
 
     output_mode = (chat_request.output_mode or "text").lower()
 
+    # 1. Pipeline de entrada de Voz
     if audio_base64:
         voice_triggered = True
         temp_audio_in = _save_base64_to_temp(audio_base64, "in")
@@ -119,21 +122,47 @@ async def handle_chat_request(chat_request: ChatRequest):
                 "latencySeconds": round(latency, 2)
             }
 
-    # 3. Pipeline RAG (Inyectar contexto web de fondo si aplica)
+    # 3. Si hay imagen, procesarla con el servicio de visión especializado (REEMPLAZADO Y CORREGIDO)
+    if imageInput:
+        # Extraemos el string Base64 puro sin cabeceras web para que la API externa lo reconozca
+        base64_puro = imageInput
+        if "," in base64_puro:
+            base64_puro = base64_puro.split(",", 1)[1]
+        
+        # Le enviamos el Base64 limpio directamente a tu VisionService
+        vision_text = vision_service.analyze_financial_image(base64_puro, textInput)
+
+        audio_url = None
+        if vision_text and (voice_triggered or output_mode == 'audio'):
+            out_filename = f"out_{uuid.uuid4()}.mp3"
+            temp_audio_out = os.path.join(TMP_DIR, out_filename)
+            if voice_service.text_to_speech(vision_text, temp_audio_out):
+                audio_url = f"/api/voice/download/{out_filename}"
+
+        latency = time.time() - start_time
+        return {
+            "source": "vision",
+            "sourceName": "VisionService",
+            "response": vision_text,
+            "audioUrl": audio_url,
+            "latencySeconds": round(latency, 2)
+        }
+
+    # 4. Pipeline RAG (Inyectar contexto web de fondo si aplica)
     rag_context = ""
     if textInput:
         rag_context = rag_service.query_knowledge(textInput)
         if rag_context:
             textInput = f"{textInput}\n\n[CONTEXTO WEB ADICIONAL PARA TU ANÁLISIS]:\n{rag_context}"
 
-    # 4. Procesar con el Agente Multi-herramientas / Multimodal
+    # 5. Procesar con el Agente Multi-herramientas / Multimodal
     agent_result = bot_agent.run(session_id=session_id, text_input=textInput, base64_image=imageInput)
 
     # Si la interacción fue exitosa y directa del LLM, guardarla en el caché dinámico para el futuro
     if agent_result["source"] == "llm" and textInput and not imageInput and not rag_context:
         cache_service.add_to_cache(textInput, agent_result["response"])
 
-    # 5. Pipeline de Salida de Voz (Reto 03)
+    # 6. Pipeline de Salida de Voz (Reto 03)
     audio_url = None
     if agent_result["response"] and (voice_triggered or output_mode == 'audio'):
         out_filename = f"out_{uuid.uuid4()}.mp3"
