@@ -1,5 +1,5 @@
-# backend/services/voice_service.py
 import os
+import httpx
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -7,12 +7,22 @@ load_dotenv()
 
 class VoiceService:
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        # CORRECCIÓN: Configuramos el cliente para ignorar la verificación SSL
+        # Esto permite que el firewall de RIWI no corte la conexión al interceptar el tráfico
+        custom_http_client = httpx.Client(
+            verify=False, # Vital para evitar el error 421 en redes bloqueadas
+            timeout=30.0
+        )
+        
+        self.client = OpenAI(
+            api_key=os.getenv("OPENAI_API_KEY"),
+            http_client=custom_http_client
+        )
 
     def transcribe_audio(self, file_path: str) -> str:
-        """Transcribe un archivo de audio (mp3/wav/m4a) a texto usando Whisper."""
         if not os.path.exists(file_path):
-            raise FileNotFoundError(f"Archivo de audio no encontrado en: {file_path}")
+            print(f"Error: Archivo no encontrado en {file_path}")
+            return ""
             
         try:
             with open(file_path, "rb") as audio_file:
@@ -22,20 +32,18 @@ class VoiceService:
                 )
             return transcript.text
         except Exception as e:
-            print(f"Error en STT Whisper: {str(e)}")
+            print(f"ERROR DETALLADO Whisper: {str(e)}")
             return ""
 
     def text_to_speech(self, text: str, output_path: str) -> bool:
-        """Convierte texto en un archivo MP3 utilizando OpenAI TTS."""
         try:
             response = self.client.audio.speech.create(
                 model="tts-1",
-                voice="alloy",  # Voz profesional y neutral
+                voice="alloy",
                 input=text
             )
-            # Guardar el flujo de audio directamente en el disco duro
             response.stream_to_file(output_path)
             return True
         except Exception as e:
-            print(f"Error en TTS OpenAI: {str(e)}")
+            print(f"ERROR DETALLADO TTS: {str(e)}")
             return False

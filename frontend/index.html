@@ -3,165 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prosperum - Financial Success</title>
-    <link rel="stylesheet" href="./styles.css">
+    <title>Ampere | Portal de Ingeniería Eléctrica</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="logo">PROSPERUM FINTECH</div>
-        <nav class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Services</a>
-            <a href="#">About</a>
-            <a href="#">Insights</a>
-            <a href="#">Contact</a>
-            <a href="#" class="btn-schedule">Schedule Consultation</a>
+    <!-- Header -->
+    <header>
+        <div class="logo">⚡ AMPERE</div>
+        <nav>
+            <a href="#">Fundamentos</a>
+            <a href="#">Análisis de Circuitos</a>
+            <a href="#">Sistemas de Potencia</a>
+            <a href="#" class="nav-cta">Recursos</a>
         </nav>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>Achieve Financial <br> Success & Security</h1>
-            <p>Expert financial planning and investment solutions tailored for your future.</p>
-            <a href="#" class="btn-main">Learn More</a>
-        </div>
-        
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="card-icon">📈</div>
-                <h3>Wealth Building</h3>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo.</p>
-                <a href="#" class="card-link">Discover More</a>
-            </div>
-            <div class="feature-card">
-                <div class="card-icon">👥</div>
-                <h3>Investment Growth</h3>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo.</p>
-                <a href="#" class="card-link">Discover More</a>
-            </div>
-            <div class="feature-card">
-                <div class="card-icon">🛡️</div>
-                <h3>Financial Protection</h3>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo.</p>
-                <a href="#" class="card-link">Discover More</a>
-            </div>
-        </div>
+        <h1>Impulsando el Futuro de la Ingeniería Eléctrica</h1>
+        <p>Plataforma de referencia para estudiantes y profesionales del sector eléctrico.</p>
+        <button class="btn-main">Explorar Contenido</button>
     </section>
 
-    <section class="solutions">
-        <h2>Our Financial Solutions</h2>
-        <div class="solutions-grid">
-            <div class="solution-item">
-                <div class="sol-img">🏦</div>
-                <h3>Retirement Planning</h3>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                <a href="#" class="btn-sub">Learn More</a>
-            </div>
-            <div class="solution-item">
-                <div class="sol-img">📊</div>
-                <h3>Investment Management</h3>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                <a href="#" class="btn-sub">Learn More</a>
-            </div>
-            <div class="solution-item">
-                <div class="sol-img">💰</div>
-                <h3>Wealth Management</h3>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                <a href="#" class="btn-sub">Learn More</a>
-            </div>
-        </div>
-    </section>
+    <!-- Academic Sections -->
+    <main class="content-grid">
+        <section class="card">
+            <h3>Teoría de Circuitos</h3>
+            <p>Domina las leyes de Kirchhoff, Thévenin y Norton con ejemplos prácticos y simulaciones detalladas.</p>
+        </section>
+        <section class="card">
+            <h3>Máquinas Eléctricas</h3>
+            <p>Análisis de transformadores, motores de inducción y generadores síncronos.</p>
+        </section>
+        <section class="card">
+            <h3>Electrónica de Potencia</h3>
+            <p>Convertidores AC/DC, inversores y control de motores de alta eficiencia.</p>
+        </section>
+    </main>
 
-    <section class="bottom-section">
-        <div class="how-we-work">
-            <h2>How We Work</h2>
-            <p>Lorem ipsum dolor sit amet, coen oe sapsgits alits esum et campor ccoiunmt aget aouis distimm.</p>
-            <div class="steps-container">
-                <div class="step">
-                    <div class="step-icon">🤝</div>
-                    <h4>Initial Consultation</h4>
-                </div>
-                <div class="step">
-                    <div class="step-icon">🎯</div>
-                    <h4>Strategic Planning</h4>
-                </div>
-                <div class="step">
-                    <div class="step-icon">✔️</div>
-                    <h4>Execution</h4>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-container">
-            <h3>Schedule Your <br> Free Consultation</h3>
-            <form>
-                <input type="text" placeholder="Name" required>
-                <input type="email" placeholder="Email" required>
-                <input type="tel" placeholder="Phone" required>
-                <input type="text" placeholder="Subject" required>
-                <textarea placeholder="Message" rows="3" required></textarea>
-                <button type="submit">Submit Request</button>
-            </form>
-        </div>
-    </section>
-
-    <div class="chatbot-container" id="chatbotContainer">
-        <div class="chatbot-toggle" id="chatbotToggle">💬</div>
-
-        <div class="chatbot-window" id="chatbotWindow">
-            <div class="chatbot-header">
+    <!-- Chatbot Component -->
+    <div id="chat-container">
+        <div id="chat-window" class="hidden">
+            <div class="chat-header">
                 <div>
-                    <h4>FinBot AI Assistant</h4>
-                    <small style="color: #94a3b8; font-size: 10px;">Bilingual Fintech Support</small>
+                    <strong>Ampere AI Assistant</strong><br>
+                    <small>Soporte Académico Eléctrico</small>
                 </div>
-                <button class="chatbot-close" id="chatbotClose">×</button>
+                <span id="close-chat">✕</span>
             </div>
-            
-            <div class="chatbot-body" id="chatbotBody">
-                <div class="chat-message system">
-                    ¡Hola! Soy FinBot, tu asesor financiero bilingüe. ¿En qué puedo ayudarte hoy?
-                </div>
+            <div class="chat-body" id="chat-body">
+                <div class="message">¡Hola! Soy Ampere, tu asistente técnico. ¿Qué concepto eléctrico deseas explorar hoy?</div>
             </div>
-
-            <div class="preview-area" id="previewArea" style="display: none;">
-                <div id="imagePreviewContainer" style="display: none;">
-                    <span id="removeImage">×</span>
-                    <img id="imagePreview" src="" alt="Preview">
-                </div>
-                <div id="voicePreviewContainer" style="display: none;">
-                    <span class="recording-dot"></span>
-                    <span id="voiceStatus">Grabando audio...</span>
-                </div>
-            </div>
-
-            <div class="chatbot-footer">
-                <div class="footer-top-row">
-                    <input type="text" placeholder="Pregúntale a FinBot..." id="chatbotInput">
-                </div>
-
-                <div class="footer-bottom-row">
-                    <div class="footer-left-actions">
-                        <input type="file" id="imageInput" accept="image/jpeg, image/png, image/webp" style="position:absolute;left:-9999px;" tabindex="-1">
-                        <button type="button" id="btnBrowseImage" class="icon-btn" title="Adjuntar imagen">＋</button>
+            <div class="chat-footer">
+                <input type="text" id="chat-input" placeholder="Pregúntale a Ampere...">
+                
+                <div class="controls-row">
+                    <button class="icon-btn">+</button>
+                    <div class="mode-toggle">
+                        <span>Chat</span>
+                        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                        <span>Voz</span>
                     </div>
-                    
-                    <div class="response-mode-selector">
-                        <span class="mode-text mode-text-chat active" id="modeTxtChat">💬 Chat</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="outputModeToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <span class="mode-text mode-text-voice" id="modeTxtVoice">🎙️ Voz</span>
-                    </div>
-                    
-                    <div class="footer-right-actions">
-                        <button type="button" id="btnAudioAction" class="icon-btn btn-mic" title="Grabar audio">🎙️</button>
-                        <button type="button" id="chatbotSend" class="icon-btn main-send" title="Enviar">➔</button>
-                    </div>
+                    <button class="mic-btn">🎙️</button>
+                    <button class="send-btn">→</button>
                 </div>
-            </div>
         </div>
+        </div>
+        <button id="chat-toggle">💬</button>
     </div>
 
     <script src="./app.js"></script>
